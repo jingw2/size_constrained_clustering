@@ -38,7 +38,8 @@ labels, centers = da.fit(X, demands)
 ```
 
 ## Copyright
-Copyright (c) 2020 Jing Wang. Released under the MIT License
+Copyright (c) 2020 Jing Wang. Released under the MIT License. 
+
 Third-party copyright in this distribution is noted where applicable.
 
 ### Results Show
