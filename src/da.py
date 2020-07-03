@@ -14,14 +14,29 @@ from copy import deepcopy
 import collections
 import random
 from scipy.spatial.distance import cdist
-import base
+
+import os 
+import sys 
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+import base 
 
 class DeterministicAnnealing(base.Base):
 
-    def __init__(self, n_clusters, capacity, max_iters, distance_func=cdist, random_state=42, T=None):
+    def __init__(self, n_clusters, distribution, max_iters=1000, 
+                distance_func=cdist, random_state=42, T=None):
+        '''
+        Args:
+            n_clusters (int): number of clusters
+            distribution (list): a list of ratio distribution for each cluster
+            T (list): inverse choice of beta coefficients
+        '''
         super(DeterministicAnnealing, self).__init__(n_clusters, max_iters, distance_func)
-        self.lamb = [i / sum(capacity) for i in capacity]
-        self.capacity = capacity
+        self.lamb = distribution
+        assert np.sum(distribution) == 1 
+        assert len(distribution) == n_clusters
+        assert isinstance(T, list) or T is None
+
         self.beta = None
         self.T = T
         self.cluster_centers_ = None 
@@ -39,6 +54,7 @@ class DeterministicAnnealing(base.Base):
         is_early_terminated = False
 
         n_samples, n_features = X.shape
+        self.capacity = [n_samples * d for d in self.lamb]
         if demands_prob is None:
             demands_prob = np.ones((n_samples, 1))
         else:
@@ -61,7 +77,7 @@ class DeterministicAnnealing(base.Base):
 
                 labels = np.argmax(gibbs, axis=1)
 
-                if self.is_satisfied(labels): break
+                if self._is_satisfied(labels): break
 
             solutions.append([labels, centers])
             resultant_clusters = len(collections.Counter(labels))
@@ -92,7 +108,7 @@ class DeterministicAnnealing(base.Base):
     def modify(self, labels, centers, distance_matrix):
         centers_distance = self.distance_func(centers, centers)
         adjacent_centers = {i: np.argsort(centers_distance, axis=1)[i, 1:3].tolist() for i in range(self.n_clusters)}
-        while not self.is_satisfied(labels):
+        while not self._is_satisfied(labels):
             count = collections.Counter(labels)
             cluster_id_list = list(count.keys())
             random.shuffle(cluster_id_list)
@@ -118,7 +134,7 @@ class DeterministicAnnealing(base.Base):
         centers = X[selective_centers]
         return centers
 
-    def is_satisfied(self, labels):
+    def _is_satisfied(self, labels):
         count = collections.Counter(labels)
         for cluster_id in range(len(self.capacity)):
             if cluster_id not in count:
