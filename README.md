@@ -53,7 +53,7 @@ Approach](http://web.eecs.umich.edu/~mayankb/docs/ClusterCap.pdf)
 * [Cluster KMeans Constrained](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2000-65.pdf)
 
 ### TO DO
-* [ ] Shrinkage Clustering
-* [X] Clustering with equal size
-* [X] Modified Kmeans clustering
 * [ ] Size constraint API
+* [ ] Examples to show
+* [ ] Readme Modification, badges, travis CI
+* [ ] Upload PyPI
