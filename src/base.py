@@ -10,6 +10,11 @@ from scipy.spatial.distance import cdist
 import numpy as np 
 import warnings
 import scipy.sparse as sp
+
+import os 
+import sys 
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
 from sklearn_import.utils.extmath import stable_cumsum
 
 class Base(object):
