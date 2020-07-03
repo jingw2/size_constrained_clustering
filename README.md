@@ -20,7 +20,7 @@ pip install requirements.txt
 * Deterministic Annealling Algorithm: Input target cluster distribution, return correspondent clusters
 * Shrinkage Clustering: base algorithm and minimum size constraints
 
-## Usage:
+### Usage:
 ```python
 import size_constrained_clustering
 import numpy as np
@@ -37,7 +37,11 @@ da = size_constrained_clustering.DeterministicAnnealing(n_clusters, max_size, n_
 labels, centers = da.fit(X, demands)
 ```
 
-## Results Show
+## Copyright
+Copyright (c) 2020 Jing Wang. Released under the MIT License
+Third-party copyright in this distribution is noted where applicable.
+
+### Results Show
 
 ### Reference
 * [Clustering with Capacity and Size Constraints: A Deterministic
