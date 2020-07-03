@@ -18,7 +18,7 @@ pip install requirements.txt
 * Same Size Contrained KMeans Inspired by Minimum Cost Flow Problem
 * Minimum and Maximum Size Constrained KMeans Inspired by Minimum Cost Flow Problem
 * Deterministic Annealling Algorithm: Input target cluster distribution, return correspondent clusters
-* Shrinkage Clustering
+* Shrinkage Clustering: base algorithm and minimum size constraints
 
 ## Usage:
 ```python
