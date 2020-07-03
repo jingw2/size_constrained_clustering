@@ -89,19 +89,6 @@ class Shrinkage(base.Base):
         centers = (X.T.dot(labels)).T / np.sum(labels, axis=0).reshape((-1, 1))
         return centers
 
-def read_points(from_file): 
-    """
-    Reads and returns a list of points [(x,y), ...] from a file.
-    """
-    points = []
-    with open(from_file) as fp: 
-        for line in fp.readlines(): 
-            feats = line.strip().split()
-            points.append((int(feats[0]), int(feats[1])))
-
-    points = np.array(points).reshape((-1, 2))
-    return points
-
 if __name__ == "__main__":
     from seaborn import scatterplot as scatter
     import matplotlib.pyplot as plt
@@ -114,8 +101,6 @@ if __name__ == "__main__":
     X, _ = make_blobs(n_samples=n_samples, n_features=2, cluster_std=1.0,
                     centers=centers, shuffle=False, random_state=42)
 
-    file = "clusters"
-    X = read_points(file)
     min_size = 100
     shrink = Shrinkage(n_clusters, min_size)
     shrink.fit(X)
