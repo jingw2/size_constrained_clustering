@@ -44,7 +44,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text][https://github.com/jingw2/size_constrained_clustering/pic/fcm.png]
+![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/fcm.png]
 
 
 等大聚类
@@ -60,7 +60,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text][https://github.com/jingw2/size_constrained_clustering/pic/equal.png]
+![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/equal.png]
 
 图中共2000个正态分布的点，聚成3类，分别有667，667和666个点。
 
@@ -74,7 +74,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text][https://github.com/jingw2/size_constrained_clustering/pic/minmax.png]
+![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/minmax.png]
 
 获取结果聚类size分别为753, 645, 602。
 
@@ -89,7 +89,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text][https://github.com/jingw2/size_constrained_clustering/pic/da.png]
+![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/da.png]
 
 获取的结果cluster size分别为：1200，600和200。对应比例为0.6, 0.3和0.1。
 
@@ -107,7 +107,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text][https://github.com/jingw2/size_constrained_clustering/pic/shrinkage.png]
+![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/shrinkage.png]
 
 
 ## Copyright
