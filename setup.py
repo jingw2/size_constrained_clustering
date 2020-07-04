@@ -1,11 +1,16 @@
-from setuptools import setup, find_packages, Extension, dist
+from setuptools import find_packages, Extension, dist
+
+try:
+    from setuptools import setup
+except:
+    from distutils.core import setup
 
 import os
 this_directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-dist.Distribution().fetch_build_eggs(["cython>=0.29", "numpy>=1.13"])
+dist.Distribution().fetch_build_eggs(["cython>=0.27", "numpy>=1.13"])
 
 
 try:
@@ -39,14 +44,15 @@ def no_cythonize(extensions, **_ignore):
         extension.sources[:] = sources
     return extensions
 
+path = os.path.dirname(os.path.abspath(__file__))
 extensions = [
-    Extension("src.k_means_constrained.mincostflow_vectorized_", ["src/k_means_constrained/mincostflow_vectorized_.pyx"],
+    Extension("size_constrained_clustering.k_means_constrained.mincostflow_vectorized_", [os.path.join(path, "size_constrained_clustering/k_means_constrained/mincostflow_vectorized_.pyx")],
               include_dirs=[get_include()]),
-    Extension("src.sklearn_import.cluster._k_means", ["src/sklearn_import/cluster/_k_means.pyx"],
+    Extension("size_constrained_clustering.sklearn_import.cluster._k_means", [os.path.join(path, "size_constrained_clustering/sklearn_import/cluster/_k_means.pyx")],
               include_dirs=[get_include()]),
-    Extension("src.sklearn_import.metrics.pairwise_fast", ["src/sklearn_import/metrics/pairwise_fast.pyx"],
+    Extension("size_constrained_clustering.sklearn_import.metrics.pairwise_fast", [os.path.join(path, "size_constrained_clustering/sklearn_import/metrics/pairwise_fast.pyx")],
                   include_dirs=[get_include()]),
-    Extension("src.sklearn_import.utils.sparsefuncs_fast", ["src/sklearn_import/utils/sparsefuncs_fast.pyx"],
+    Extension("size_constrained_clustering.sklearn_import.utils.sparsefuncs_fast", [os.path.join(path, "size_constrained_clustering/sklearn_import/utils/sparsefuncs_fast.pyx")],
                       include_dirs=[get_include()]),
 ]
 
@@ -58,11 +64,15 @@ if CYTHONIZE:
 else:
     extensions = no_cythonize(extensions)
 
-with open("requirements.txt") as fp:
+with open(os.path.join(path, "requirements.txt")) as fp:
     install_requires = fp.read().strip().split("\n")
 
+VERSION = "0.1.0"
+LICENSE = 'MIT'
 setup(
       ext_modules=extensions,
+      version=VERSION,
+      setup_requires=["cython", "numpy"],
       install_requires=install_requires,
       name='size_constrained_clustering',
       description='Size Constrained Clustering solver',
@@ -71,6 +81,6 @@ setup(
       url='https://github.com/jingw2/size_constrained_clustering',
       author='Jing Wang',
       author_email='jingw2@foxmail.com',
-      license='MIT',
+      license=LICENSE,
       packages=find_packages(),
       python_requires='>=3.6')

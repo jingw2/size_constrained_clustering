@@ -1,16 +1,15 @@
 ## Size Constrained Clustering Solver
 [![Build Status](https://travis-ci.org/jingw2/size_constrained_clustering.svg?branch=master)](https://travis-ci.org/jingw2/size_constrained_clustering)
+[![PyPI version](https://badge.fury.io/py/size-constrained-clustering.svg)](https://badge.fury.io/py/size-constrained-clustering)
 
 Implementation of Size Constrained Clustering. 
 Size constrained clustering can be treated as an optimization problem. Details could be found in a set of reference paper.
 
 ### Installation
-Requirement Python >= 3.7
-* Method 1: install from PyPI
-  
-* Method 2: Download Source Files, and run the following code in terminal
+Requirement Python >= 3.6, Numpy >= 1.13, Cython >= 0.29
+* install from PyPI
 ```shell
-python setup.py install
+pip install size-constrained-clustering
 ```
 
 ### Methods
@@ -24,8 +23,7 @@ python setup.py install
 ### Usage:
 ```python
 # setup
-import size_constrained_clustering as scc
-from scc import fcm, equal, minmax, shrinkage
+from size_constrained_clustering import fcm, equal, minmax, shrinkage
 # 默认都是欧式距离计算，可接受其它distance函数，比如haversine
 from sklearn.metrics.pairwise import haversine_distances
 ```
