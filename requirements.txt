@@ -1,8 +1,10 @@
-joblib==0.10.3
-numpy==1.18.1
-scipy==1.3.1
-ortools==6.10.6025
+pytest==3.7.1
+six==1.12.0
+psutil==5.4.6
+ortools==6.5.4527
+seaborn==0.10.1
+joblib==0.15.1
+scipy==1.4.1
 matplotlib==3.1.0
-six==1.14.0
-seaborn==0.9.0
+numpy==1.14.6
 scikit_learn==0.23.1
