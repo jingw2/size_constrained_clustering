@@ -1,6 +1,7 @@
 ## Size Constrained Clustering Solver
 [![Build Status](https://travis-ci.org/jingw2/size_constrained_clustering.svg?branch=master)](https://travis-ci.org/jingw2/size_constrained_clustering)
 [![PyPI version](https://badge.fury.io/py/size-constrained-clustering.svg)](https://badge.fury.io/py/size-constrained-clustering)
+![GitHub](https://img.shields.io/github/license/jingw2/size_constrained_clustering)
 
 Implementation of Size Constrained Clustering. 
 Size constrained clustering can be treated as an optimization problem. Details could be found in a set of reference paper.
@@ -26,6 +27,7 @@ pip install size-constrained-clustering
 from size_constrained_clustering import fcm, equal, minmax, shrinkage
 # 默认都是欧式距离计算，可接受其它distance函数，比如haversine
 from sklearn.metrics.pairwise import haversine_distances
+import numpy as np
 ```
 
 Fuzzy C-means 
