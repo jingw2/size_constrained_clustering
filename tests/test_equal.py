@@ -6,7 +6,7 @@ import sys
 import os 
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(path)
-from src import equal
+from size_constrained_clustering import equal
 
 class TestEqual:
 

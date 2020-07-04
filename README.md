@@ -25,7 +25,7 @@ pip install size-constrained-clustering
 ```python
 # setup
 from size_constrained_clustering import fcm, equal, minmax, shrinkage
-# 默认都是欧式距离计算，可接受其它distance函数，比如haversine
+# by default it is euclidean distance, but can select others
 from sklearn.metrics.pairwise import haversine_distances
 import numpy as np
 ```
@@ -47,14 +47,14 @@ labels = model.labels_
 ![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/fcm.png]
 
 
-等大聚类
+Equal Size Constraint
 ```python
 n_samples = 2000
 n_clusters = 3
 X = np.random.rand(n_samples, 2)
-# 使用minmax flow方式求解
+# use minimum cost flow framework to solve
 model = equal.SameSizeKMeansMinCostFlow(n_clusters)
-# 使用heuristics方法求解
+# use heuristics method to solve
 model = equal.SameSizeKMeansHeuristics(n_clusters)
 model.fit(X)
 centers = model.cluster_centers_
@@ -62,9 +62,9 @@ labels = model.labels_
 ```
 ![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/equal.png]
 
-图中共2000个正态分布的点，聚成3类，分别有667，667和666个点。
+Cluster size: 667, 667 and 666 in the figure above.
 
-最小和最大规模限制
+Minimum and Maximum Size Constraint
 ```python
 n_samples = 2000
 n_clusters = 3
@@ -76,14 +76,14 @@ labels = model.labels_
 ```
 ![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/minmax.png]
 
-获取结果聚类size分别为753, 645, 602。
+Cluster size: 753, 645 and 602 in the figure above.
 
 Deterministic Annealing
 ```python
 n_samples = 2000
 n_clusters = 3
 X = np.random.rand(n_samples, 2)
-# distribution 表明各cluster目标的比例
+# distribution is the distribution of cluster sizes
 model = da.DeterministicAnnealing(n_clusters, distribution=[0.1, 0.6, 0.3])
 model.fit(X)
 centers = model.cluster_centers_
@@ -91,11 +91,11 @@ labels = model.labels_
 ```
 ![alt text][https://github.com/jingw2/size_constrained_clustering/tree/master/pic/da.png]
 
-获取的结果cluster size分别为：1200，600和200。对应比例为0.6, 0.3和0.1。
+Cluster size: 1200, 600 and 200 in the figure above, corresponding to distribution [0.6, 0.3, 0.1]
 
 Shrinkage Clustering
 
-只能保证收敛到局部最优，且获取的结果不一定可用。
+The result might be not available.
 ```python
 n_samples = 1000
 n_clusters = 4

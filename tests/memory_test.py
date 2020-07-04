@@ -6,7 +6,7 @@ import sys
 
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(path)
-from src import equal, da
+from size_constrained_clustering  import equal, da
 
 n_samples = 10000
 n_clusters = 4 
