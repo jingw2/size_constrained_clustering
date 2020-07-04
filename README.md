@@ -60,7 +60,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text](https://github.com/jingw2/size_constrained_clustering/tree/master/pic/equal.png)
+![alt text](https://github.com/jingw2/size_constrained_clustering/blob/master/pic/equal.png)
 
 Cluster size: 667, 667 and 666 in the figure above.
 
@@ -74,7 +74,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text](https://github.com/jingw2/size_constrained_clustering/tree/master/pic/minmax.png)
+![alt text](https://github.com/jingw2/size_constrained_clustering/blob/master/pic/minmax.png)
 
 Cluster size: 753, 645 and 602 in the figure above.
 
@@ -89,7 +89,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text](https://github.com/jingw2/size_constrained_clustering/tree/master/pic/da.png)
+![alt text](https://github.com/jingw2/size_constrained_clustering/blob/master/pic/da.png)
 
 Cluster size: 1200, 600 and 200 in the figure above, corresponding to distribution [0.6, 0.3, 0.1]
 
@@ -107,7 +107,7 @@ model.fit(X)
 centers = model.cluster_centers_
 labels = model.labels_
 ```
-![alt text](https://github.com/jingw2/size_constrained_clustering/tree/master/pic/shrinkage.png)
+![alt text](https://github.com/jingw2/size_constrained_clustering/blob/master/pic/shrinkage.png)
 
 
 ## Copyright
