@@ -1,15 +1,16 @@
 ## Size Constrained Clustering Solver
+[![Build Status](https://travis-ci.org/jingw2/size_constrained_clustering.svg?branch=master)](https://travis-ci.org/jingw2/size_constrained_clustering)
 
 Implementation of Size Constrained Clustering. 
 Size constrained clustering can be treated as an optimization problem. Details could be found in a set of reference paper.
 
 ### Installation
-Requirement Python >= 3.6
+Requirement Python >= 3.7
 * Method 1: install from PyPI
   
 * Method 2: Download Source Files, and run the following code in terminal
 ```shell
-pip install requirements.txt
+python setup.py install
 ```
 
 ### Methods
@@ -22,32 +23,103 @@ pip install requirements.txt
 
 ### Usage:
 ```python
-import size_constrained_clustering
-import numpy as np
-
-# initialization
-n_points = 1000
-X = np.random.rand(n_points, 2)
-demands = np.ones((n_points, 1))
-n_clusters = 4
-n_iters = 100
-max_size = [n_points / n_clusters] * n_clusters
-
-da = size_constrained_clustering.DeterministicAnnealing(n_clusters, max_size, n_iters, "l2")
-labels, centers = da.fit(X, demands)
+# setup
+import size_constrained_clustering as scc
+from scc import fcm, equal, minmax, shrinkage
+# 默认都是欧式距离计算，可接受其它distance函数，比如haversine
+from sklearn.metrics.pairwise import haversine_distances
 ```
+
+Fuzzy C-means 
+```python
+n_samples = 2000
+n_clusters = 4
+centers = [(-5, -5), (0, 0), (5, 5), (7, 10)]
+X, _ = make_blobs(n_samples=n_samples, n_features=2, cluster_std=1.0,
+                    centers=centers, shuffle=False, random_state=42)
+model = fcm.FCM(n_clusters)
+# use other distance function: e.g. haversine distance
+# model = fcm.FCM(n_clusters, distance_func=haversine_distances)
+model.fit(X)
+centers = model.cluster_centers_
+labels = model.labels_
+```
+![alt text][https://github.com/jingw2/size_constrained_clustering/pic/fcm.png]
+
+
+等大聚类
+```python
+n_samples = 2000
+n_clusters = 3
+X = np.random.rand(n_samples, 2)
+# 使用minmax flow方式求解
+model = equal.SameSizeKMeansMinCostFlow(n_clusters)
+# 使用heuristics方法求解
+model = equal.SameSizeKMeansHeuristics(n_clusters)
+model.fit(X)
+centers = model.cluster_centers_
+labels = model.labels_
+```
+![alt text][https://github.com/jingw2/size_constrained_clustering/pic/equal.png]
+
+图中共2000个正态分布的点，聚成3类，分别有667，667和666个点。
+
+最小和最大规模限制
+```python
+n_samples = 2000
+n_clusters = 3
+X = np.random.rand(n_samples, 2)
+model = minmax.MinMaxKMeansMinCostFlow(n_clusters, size_min=400,   size_max=800)
+model.fit(X)
+centers = model.cluster_centers_
+labels = model.labels_
+```
+![alt text][https://github.com/jingw2/size_constrained_clustering/pic/minmax.png]
+
+获取结果聚类size分别为753, 645, 602。
+
+Deterministic Annealing
+```python
+n_samples = 2000
+n_clusters = 3
+X = np.random.rand(n_samples, 2)
+# distribution 表明各cluster目标的比例
+model = da.DeterministicAnnealing(n_clusters, distribution=[0.1, 0.6, 0.3])
+model.fit(X)
+centers = model.cluster_centers_
+labels = model.labels_
+```
+![alt text][https://github.com/jingw2/size_constrained_clustering/pic/da.png]
+
+获取的结果cluster size分别为：1200，600和200。对应比例为0.6, 0.3和0.1。
+
+Shrinkage Clustering
+
+只能保证收敛到局部最优，且获取的结果不一定可用。
+```python
+n_samples = 1000
+n_clusters = 4
+centers = [(-5, -5), (0, 0), (5, 5), (7, 10)]
+X, _ = make_blobs(n_samples=n_samples, n_features=2, cluster_std=1.0, centers=centers, shuffle=False, random_state=42)
+
+model = shrinkage.Shrinkage(n_clusters, size_min=100)
+model.fit(X)
+centers = model.cluster_centers_
+labels = model.labels_
+```
+![alt text][https://github.com/jingw2/size_constrained_clustering/pic/shrinkage.png]
+
 
 ## Copyright
 Copyright (c) 2020 Jing Wang. Released under the MIT License. 
 
 Third-party copyright in this distribution is noted where applicable.
 
-### Results Show
-
 ### Reference
 * [Clustering with Capacity and Size Constraints: A Deterministic
 Approach](http://web.eecs.umich.edu/~mayankb/docs/ClusterCap.pdf)
 * [Deterministic Annealing, Clustering and Optimization](https://thesis.library.caltech.edu/2858/1/Rose_k_1991.pdf)
+* [Deterministic Annealing, Constrained Clustering, and Opthiieation](https://authors.library.caltech.edu/78353/1/00170767.pdf)
 * [Shrinkage Clustering](https://www.researchgate.net/publication/322668506_Shrinkage_Clustering_A_fast_and_size-constrained_clustering_algorithm_for_biomedical_applications)
 * [Clustering with size constraints](https://www.researchgate.net/publication/268292668_Clustering_with_Size_Constraints)
 * [Data Clustering with Cluster Size Constraints Using a Modified k-means Algorithm](https://core.ac.uk/download/pdf/61217069.pdf)
@@ -58,7 +130,7 @@ Approach](http://web.eecs.umich.edu/~mayankb/docs/ClusterCap.pdf)
 * [Cluster KMeans Constrained](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2000-65.pdf)
 
 ### TO DO
-* [ ] Size constraint API
-* [ ] Examples to show
+* [X] Size constraint API
+* [X] Examples to show
 * [ ] Readme Modification, badges, travis CI
 * [ ] Upload PyPI

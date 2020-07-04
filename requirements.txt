@@ -1,7 +1,7 @@
 pytest==3.7.1
 six==1.12.0
 psutil==5.4.6
-ortools==6.5.4527
+ortools>=6.7
 seaborn==0.10.1
 joblib==0.15.1
 scipy==1.4.1

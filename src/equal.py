@@ -15,7 +15,6 @@ import numpy as np
 # from sklearn.cluster._k_means import _k_init
 from sklearn.preprocessing import OneHotEncoder
 import collections
-from k_means_constrained import KMeansConstrained
 import warnings
 
 import sys 
@@ -23,6 +22,7 @@ import os
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(path)
 import base
+from k_means_constrained import KMeansConstrained
 
 class SameSizeKMeansHeuristics(base.Base):
     

@@ -9,6 +9,10 @@
     size-constrained clustering algorithm for biomedical applications
 '''
 
+import os 
+import sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
 import base 
 from scipy.spatial.distance import cdist
 import numpy as np
@@ -16,7 +20,7 @@ import random
 
 class Shrinkage(base.Base):
 
-    def __init__(self, n_clusters, min_size=1, max_iters=1000, \
+    def __init__(self, n_clusters, size_min=1, max_iters=1000, \
         distance_func=cdist, random_state=42):
         '''
         Args:
@@ -28,11 +32,15 @@ class Shrinkage(base.Base):
         super(Shrinkage, self).__init__(n_clusters, max_iters, distance_func)
         np.random.seed(random_state)
         random.seed(random_state)
-        self.min_size = min_size
+        self.size_min = size_min
+        assert isinstance(size_min, int)
+        assert size_min >= 1 
 
     def fit(self, X):
         
         n_samples, n_features = X.shape
+
+        assert self.size_min <= n_samples // self.n_clusters
         # calculate similarity matrix, larger similarity means more resemblance
         S = self.distance_func(X, X)
         S /= np.max(S)
@@ -43,7 +51,7 @@ class Shrinkage(base.Base):
         while True:
             # remove empty clusters 
             cluster_size = np.sum(A, axis=0)
-            keep_cluster = np.where(cluster_size >= self.min_size)[0]
+            keep_cluster = np.where(cluster_size >= self.size_min)[0]
             A = A[:, keep_cluster]
             
             # permute cluster membership
@@ -56,7 +64,7 @@ class Shrinkage(base.Base):
             A[X_bar] = np.zeros(K)
             A[X_bar, C_prime] = 1
 
-            if abs(np.sum(v)) < 1e-5  or iters >= self.max_iters:
+            if abs(np.sum(v)) < 1e-5 or iters >= self.max_iters:
                 break 
             
             iters += 1
@@ -71,8 +79,7 @@ class Shrinkage(base.Base):
         '''
         n_samples, _ = S.shape 
         A = np.zeros((n_samples, self.n_clusters))
-        A[range(n_samples), [random.choice(range(self.n_clusters)) \
-            for _ in range(n_samples)]] = 1 
+        A[range(n_samples), [random.choice(range(self.n_clusters)) for _ in range(n_samples)]] = 1
         S_tilde = 1 - 2 * S 
         return A, S_tilde
     
@@ -88,29 +95,3 @@ class Shrinkage(base.Base):
         '''
         centers = (X.T.dot(labels)).T / np.sum(labels, axis=0).reshape((-1, 1))
         return centers
-
-if __name__ == "__main__":
-    from seaborn import scatterplot as scatter
-    import matplotlib.pyplot as plt
-    from sklearn.datasets import make_blobs
-    n_samples = 1000
-    n_clusters = 3
-
-    centers = [(-5, -5), (0, 0), (5, 5), (10, 10)]
-
-    X, _ = make_blobs(n_samples=n_samples, n_features=2, cluster_std=1.0,
-                    centers=centers, shuffle=False, random_state=42)
-
-    min_size = 100
-    shrink = Shrinkage(n_clusters, min_size)
-    shrink.fit(X)
-
-    fcm_centers = shrink.cluster_centers_
-    fcm_labels = shrink.labels_
-
-    # plot result
-    f, axes = plt.subplots(1, 2, figsize=(11,5))
-    scatter(X[:,0], X[:,1], ax=axes[0])
-    scatter(X[:,0], X[:,1], ax=axes[1], hue=fcm_labels)
-    scatter(fcm_centers[:,0], fcm_centers[:,1], ax=axes[1],marker="s",s=200)
-    plt.show()

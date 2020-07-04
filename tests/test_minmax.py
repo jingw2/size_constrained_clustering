@@ -25,6 +25,11 @@ class TestMinMax:
             minmax.MinMaxKMeansMinCostFlow(n_clusters=1, size_min=-1, size_max=2)
         with pytest.raises(AssertionError):
             minmax.MinMaxKMeansMinCostFlow(n_clusters=1, size_min=20, size_max=10)
+        with pytest.raises(AssertionError):
+            model = minmax.MinMaxKMeansMinCostFlow(n_clusters=1, size_min=10, size_max=20)
+            import numpy as np 
+            X = np.random.random((1000, 2))
+            model.fit(X)
     
     def test_output(self):
         from sklearn.datasets import make_blobs

@@ -91,30 +91,3 @@ class FCM(base.Base):
         u = self.update_membership(X)
         labels = np.argmax(u, axis=1)
         return labels
-
-if __name__ == "__main__":
-    from sklearn.datasets import make_blobs
-    from matplotlib import pyplot as plt
-    from seaborn import scatterplot as scatter
-    from sklearn.metrics.pairwise import haversine_distances
-    n_samples = 5000
-    n_bins = 4  # use 3 bins for calibration_curve as we have 3 clusters here
-    centers = [(-5, -5), (0, 0), (5, 5), (7, 10)]
-
-    X, _ = make_blobs(n_samples=n_samples, n_features=2, cluster_std=1.0,
-                    centers=centers, shuffle=False, random_state=42)
-
-    # X = np.radians(X)
-    # distance_func = haversine_distances
-    fcm = FCM(n_bins)
-    fcm.fit(X)
-
-    fcm_centers = fcm.cluster_centers_
-    fcm_labels = fcm.labels_
-
-    # plot result
-    f, axes = plt.subplots(1, 2, figsize=(11,5))
-    scatter(X[:,0], X[:,1], ax=axes[0])
-    scatter(X[:,0], X[:,1], ax=axes[1], hue=fcm_labels)
-    scatter(fcm_centers[:,0], fcm_centers[:,1], ax=axes[1],marker="s",s=200)
-    plt.show()

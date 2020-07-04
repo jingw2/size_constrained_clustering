@@ -10,6 +10,11 @@
 @Web: 
 '''
 
+import os 
+import sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+import base 
 from k_means_constrained import KMeansConstrained
 import numpy as np 
 import matplotlib.pyplot as plt
@@ -18,7 +23,6 @@ import collections
 from sklearn.metrics.pairwise import haversine_distances
 from sklearn.datasets import make_blobs
 from scipy.spatial.distance import cdist
-import base 
 
 class MinMaxKMeansMinCostFlow(base.Base):
 
@@ -40,7 +44,8 @@ class MinMaxKMeansMinCostFlow(base.Base):
         assert size_min <= size_max
 
     def fit(self, X):
-        n_samles, n_features = X.shape
+        n_samples, n_features = X.shape
+        assert self.size_max * self.n_clusters >= n_samples
 
         clf = KMeansConstrained(self.n_clusters, size_min=self.size_min, 
             size_max=self.size_max, distance_func=self.distance_func)
