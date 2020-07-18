@@ -1,6 +1,9 @@
 language: python 
 python: 
 - '3.7'
+before_install:
+- pip install pytest pytest-cov
+- pip install coveralls
 install:
 - python setup.py build_ext --inplace
 - pip install -r requirements.txt 
