@@ -2,12 +2,11 @@ language: python
 python: 
 - '3.7'
 before_install:
-- pip install pytest
-- pip install coveralls
+- pip install -U pytest codecov
 install:
 - python setup.py build_ext --inplace
 - pip install -r requirements.txt 
 script:
-- coverage run -m pytest ./tests
+- pytest ./tests
 after_sucess:
-  coveralls
+  codecov
