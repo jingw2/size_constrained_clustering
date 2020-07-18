@@ -2,11 +2,11 @@ language: python
 python: 
 - '3.7'
 before_install:
-- pip install -U pytest codecov
+- pip install -U pytest pytest-cov codecov
 install:
 - python setup.py build_ext --inplace
 - pip install -r requirements.txt 
 script:
-- pytest ./tests
+- pytest --cov=./tests
 after_sucess:
   codecov
