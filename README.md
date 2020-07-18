@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/jingw2/size_constrained_clustering.svg?branch=master)](https://travis-ci.org/jingw2/size_constrained_clustering)
 [![PyPI version](https://badge.fury.io/py/size-constrained-clustering.svg)](https://badge.fury.io/py/size-constrained-clustering)
 ![GitHub](https://img.shields.io/github/license/jingw2/size_constrained_clustering)
+[![Coverage Status](https://coveralls.io/repos/github/jingw2/size_constrained_clustering/badge.svg?branch=master)](https://coveralls.io/github/jingw2/size_constrained_clustering?branch=master)
+
 
 Implementation of Size Constrained Clustering. 
 Size constrained clustering can be treated as an optimization problem. Details could be found in a set of reference paper.
