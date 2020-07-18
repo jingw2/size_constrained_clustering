@@ -3,6 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/size-constrained-clustering.svg)](https://badge.fury.io/py/size-constrained-clustering)
 ![GitHub](https://img.shields.io/github/license/jingw2/size_constrained_clustering)
 [![Coverage Status](https://coveralls.io/repos/github/jingw2/size_constrained_clustering/badge.svg?branch=master)](https://coveralls.io/github/jingw2/size_constrained_clustering?branch=master)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/size-constrained-clustering)
 
 
 Implementation of Size Constrained Clustering. 
