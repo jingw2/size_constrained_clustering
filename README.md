@@ -4,6 +4,7 @@
 ![GitHub](https://img.shields.io/github/license/jingw2/size_constrained_clustering)
 [![codecov](https://codecov.io/gh/jingw2/size_constrained_clustering/branch/master/graph/badge.svg)](https://codecov.io/gh/jingw2/size_constrained_clustering)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/size-constrained-clustering)
+![Codecov](https://img.shields.io/codecov/c/github/jingw2/size_constrained_clustering)
 
 
 Implementation of Size Constrained Clustering. 
