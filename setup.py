@@ -67,7 +67,7 @@ else:
 with open(os.path.join(path, "requirements.txt")) as fp:
     install_requires = fp.read().strip().split("\n")
 
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 LICENSE = 'MIT'
 setup(
       ext_modules=extensions,
