@@ -1,6 +1,6 @@
 joblib==0.15.1
 psutil==5.9.1
-numpy==1.22.4
+numpy==1.23.3
 scipy==1.6.0
 ortools==9.3.10497
 six==1.12.0
